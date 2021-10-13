@@ -34,84 +34,85 @@ import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class NotificationService extends NotificationListenerService {
-    private String TAG = this .getClass().getSimpleName() ;
-    Context context ;
-    String title;
-    Database db;
-    String text1;
-    public static final  int          USER_OWNER = 0;
-    String ns = Context.NOTIFICATION_SERVICE;
-    NotificationManager notificationManager;
+	private String TAG = this.getClass().getSimpleName();
+	Context context;
+	String title;
+	Database db;
+	String text1;
+	public static final int USER_OWNER = 0;
+	String ns = Context.NOTIFICATION_SERVICE;
+	NotificationManager notificationManager;
 
-    @Override
-    public void onCreate () {
-        super .onCreate() ;
-        context = getApplicationContext() ;
-    }
-    @SuppressLint("UseCompatLoadingForDrawables")
-    @Override
-    public void onNotificationPosted (StatusBarNotification sbn) {
-        String pack = sbn.getPackageName();
-        String ticker = "";
-        if (sbn.getNotification().tickerText != null) {
-            ticker = sbn.getNotification().tickerText.toString();
-        }
-        Bundle extras = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            extras = sbn.getNotification().extras;
-        }
-        long NotificationPosttime = sbn.getPostTime();
-        String NotPosttime = getDate(NotificationPosttime, "dd/MM/yyyy hh:mm");
-        Notification Note = sbn.getNotification();
-        if (extras.get(Notification.EXTRA_TITLE) != null) {
-            title = (String) extras.get(Notification.EXTRA_TITLE);
-        }
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		context = getApplicationContext();
+	}
 
-        try {
-            Object text = extras.get(Notification.EXTRA_TEXT);
-            text1 = text.toString();
-        } catch (Exception e) {
+	@SuppressLint("UseCompatLoadingForDrawables")
+	@Override
+	public void onNotificationPosted(StatusBarNotification sbn) {
+		String pack = sbn.getPackageName();
+		String ticker = "";
+		if (sbn.getNotification().tickerText != null) {
+			ticker = sbn.getNotification().tickerText.toString();
+		}
+		Bundle extras = null;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+			extras = sbn.getNotification().extras;
+		}
+		long NotificationPosttime = sbn.getPostTime();
+		String NotPosttime = getDate(NotificationPosttime, "dd/MM/yyyy hh:mm");
+		Notification Note = sbn.getNotification();
+		if (extras.get(Notification.EXTRA_TITLE) != null) {
+			title = (String) extras.get(Notification.EXTRA_TITLE);
+		}
 
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+		try {
+			Object text = extras.get(Notification.EXTRA_TEXT);
+			text1 = text.toString();
+		} catch (Exception e) {
 
-
-                notificationManager = (NotificationManager) getSystemService(ns);
-                notificationManager.getNotificationChannels();
-
-        }
-        int iconId = extras.getInt(Notification.EXTRA_SMALL_ICON);
+		}
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
 
-        Intent msgrcv = new Intent("Msg");
-        msgrcv.putExtra("package", pack);
-        msgrcv.putExtra("ticker", ticker);
-        msgrcv.putExtra("title", title);
-        msgrcv.putExtra("text", text1);
-        msgrcv.putExtra("PostTime", NotPosttime);
-        msgrcv.putExtra("NotificationChannelGroup", String.valueOf(notificationManager));
-        //       msgrcv.putExtra("icon", (Parcelable) appIcon);
+			notificationManager = (NotificationManager) getSystemService(ns);
+			notificationManager.getNotificationChannels();
+
+		}
+		int iconId = extras.getInt(Notification.EXTRA_SMALL_ICON);
 
 
-        //  msgrcv.putExtra("icon", (Parcelable) drawable);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(msgrcv);
-    }
+		Intent msgrcv = new Intent("Msg");
+		msgrcv.putExtra("package", pack);
+		msgrcv.putExtra("ticker", ticker);
+		msgrcv.putExtra("title", title);
+		msgrcv.putExtra("text", text1);
+		msgrcv.putExtra("PostTime", NotPosttime);
+		msgrcv.putExtra("NotificationChannelGroup", String.valueOf(notificationManager));
+		//       msgrcv.putExtra("icon", (Parcelable) appIcon);
 
-    @Override
-    public void onNotificationRemoved (StatusBarNotification sbn) {
-        Log.i("Msg","Notification Removed");
 
-    }
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+		//  msgrcv.putExtra("icon", (Parcelable) drawable);
+		LocalBroadcastManager.getInstance(context).sendBroadcast(msgrcv);
+	}
 
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
-    }
+	@Override
+	public void onNotificationRemoved(StatusBarNotification sbn) {
+		Log.i("Msg", "Notification Removed");
+
+	}
+
+	public static String getDate(long milliSeconds, String dateFormat) {
+		// Create a DateFormatter object for displaying date in specified format.
+		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+		// Create a calendar object that will convert the date and time value in milliseconds to date.
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(milliSeconds);
+		return formatter.format(calendar.getTime());
+	}
 
 
 }

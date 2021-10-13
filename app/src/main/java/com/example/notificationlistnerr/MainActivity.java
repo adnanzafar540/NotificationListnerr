@@ -26,68 +26,88 @@ import com.example.notificationlistnerr.Databases.Database;
 
 import java.security.Permission;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    ListView list;
-    CustomListAdapter adapter;
-    ArrayList<Model> modelList;
-    Button btn;
-    Database db;
+	ListView list;
+	CustomListAdapter adapter;
+	ArrayList<Model> modelList;
+	Button btn;
+	Database db;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        modelList = new ArrayList<Model>();
-        db=new Database(this);
-       // btn=findViewById(R.id.btn_save);
-        adapter = new CustomListAdapter(getApplicationContext(),db.readAllData());
-        list=(ListView)findViewById(R.id.list);
-        list.setAdapter(adapter);
-        btn.setOnClickListener(new View.OnClickListener() {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		modelList = new ArrayList<Model>();
+		db = new Database(this);
+		// btn=findViewById(R.id.btn_save);
+
+		adapter = new CustomListAdapter(getApplicationContext(), sortData());
+		list = (ListView) findViewById(R.id.list);
+		list.setAdapter(adapter);
+        /*btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // addDatainDatabase();
             }
-        });
-        Intent intent = new Intent(
-                "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
-        startActivity(intent);
-        LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("Msg"));
-    }
+        });*/
+		Intent intent = new Intent(
+				"android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+		startActivity(intent);
+		LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("Msg"));
+	}
 
-    private BroadcastReceiver onNotice= new BroadcastReceiver() {
+	private List<List<Model>> sortData() {
+		ArrayList<Model> testdata = db.readAllData();
+		List<List<Model>> innerLlist = new ArrayList<>();
+		Set<String> packagesSet = new HashSet();
+		for (Model item : testdata) {
+			packagesSet.add(item.packaename);
+		}
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-             String pack = intent.getStringExtra("package");
-            String title = intent.getStringExtra("title");
-            String text = intent.getStringExtra("text");
-            String postime = intent.getStringExtra("PostTime");
-            String NotificationChannelGroup = intent.getStringExtra("NotificationChannelGroup");
-          //  Drawable drawable = intent.getExtra("icon");
-            //int id = intent.getIntExtra("icon",0);
+		for (String value : packagesSet) {
+			List<Model> appsForPackageList = new ArrayList<>();
+			for (Model item : testdata) {
+				if (item.getPackaename().equals(value)) {
+					appsForPackageList.add(item);
+				}
+			}
+			innerLlist.add(appsForPackageList);
+		}
+		return innerLlist;
+	}
 
-            Context remotePackageContext = null;
+	private BroadcastReceiver onNotice = new BroadcastReceiver() {
 
-                Model model = new Model();
-                model.setName(title);
-                model.setText(text);
-                model.setPosttime(postime);
-                model.setPackaename(pack);
-                model.setNotificationChannelGroup(NotificationChannelGroup);
-                db.insertData(model);
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String pack = intent.getStringExtra("package");
+			String title = intent.getStringExtra("title");
+			String text = intent.getStringExtra("text");
+			String postime = intent.getStringExtra("PostTime");
+			String NotificationChannelGroup = intent.getStringExtra("NotificationChannelGroup");
+			//  Drawable drawable = intent.getExtra("icon");
+			//int id = intent.getIntExtra("icon",0);
 
-                    adapter = new CustomListAdapter(getApplicationContext(), db.readAllData());
-                    list=(ListView)findViewById(R.id.list);
-                    list.setAdapter(adapter);
+			Context remotePackageContext = null;
+
+			Model model = new Model();
+			model.setName(title);
+			model.setText(text);
+			model.setPosttime(postime);
+			model.setPackaename(pack);
+			model.setNotificationChannelGroup(NotificationChannelGroup);
+			db.insertData(model);
 
 
-
-        }
-    };
-    public void addDatainDatabase(Model m){
-        db.insertData(m);
-
-    }
+			adapter = new CustomListAdapter(getApplicationContext(), sortData());
+			list.setAdapter(adapter);
+		}
+	};
 }

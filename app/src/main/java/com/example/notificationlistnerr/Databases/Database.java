@@ -48,7 +48,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_2,  model.getText());
         contentValues.put(COL_3, model.getPosttime());
         contentValues.put(COL_4,  model.getName());
-        contentValues.put(COL_4,  model.getPackaename());
+        contentValues.put(COL_5,  model.getPackaename());
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
             return false;

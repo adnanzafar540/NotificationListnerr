@@ -15,15 +15,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CustomListAdapter extends BaseAdapter {
     Context context;
-    ArrayList<Model> modelList;
+    List<List<Model>> modelList;
     Set<String> setPakageName;
 
 
-    public CustomListAdapter(Context context, ArrayList<Model> modelList) {
+    public CustomListAdapter(Context context, List<List<Model>> modelList) {
         this.context = context;
         this.modelList = modelList;
     }
@@ -103,13 +104,6 @@ public class CustomListAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             return appIcon;
-        }
-        public void checkNotificationForPakagename(String pakagename){
-        setPakageName=new HashSet<>();
-            setPakageName.add(pakagename);
-
-
-
         }
         public void openClickedPakage(String pakagename){
             PackageManager pm = context.getPackageManager();
