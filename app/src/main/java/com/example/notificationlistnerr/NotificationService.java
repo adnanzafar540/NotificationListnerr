@@ -80,7 +80,6 @@ public class NotificationService extends NotificationListenerService {
                 notificationManager.getNotificationChannels();
 
         }
-        int iconId = extras.getInt(Notification.EXTRA_SMALL_ICON);
 
 
         Intent msgrcv = new Intent("Msg");

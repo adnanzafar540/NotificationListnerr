@@ -48,7 +48,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_2,  model.getText());
         contentValues.put(COL_3, model.getPosttime());
         contentValues.put(COL_4,  model.getName());
-        contentValues.put(COL_4,  model.getPackaename());
+        contentValues.put(COL_5,  model.getPackaename());
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
             return false;
@@ -75,4 +75,38 @@ public class Database extends SQLiteOpenHelper {
         }
         return list;
     }
-}
+    public List<Model> checkPakageName_GetData(String pkgName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        List<Model> modelList = new ArrayList<>();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery("SELECT * FROM particulars_table WHERE pakage_name = '" + pkgName + "'", null);
+             while(cursor.moveToNext()) {
+                Model model = new Model();
+                model.setName(cursor.getString(1));
+                model.setText(cursor.getString(2));
+                model.setPosttime(cursor.getString(3));
+                model.setPackaename(cursor.getString(5));
+                cursor.moveToNext();
+                modelList.add(model);
+
+            }
+        }            return modelList;
+
+    }
+    public boolean isDatabaseEmpty() {
+        boolean chk = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if (mCursor != null){
+            if(mCursor.getCount() == 0){
+
+                chk = false;
+            }
+        }else{
+            chk = true;
+        }
+        return chk;
+    }
+    }
