@@ -75,14 +75,19 @@ public class CustomListAdapter extends BaseAdapter {
             }
         });
             if(modelList!=null){
-            Model m = modelList.get(position).get(0);
+                for(List<Model> model:modelList){
+                for(Model m:model){
+                  // Model m=model.get(position);
+            //Model m = modelList.get(position).get(1);
         txtTitle.setText(m.getName());
         txt.setText(m.getText());
         date.setText(m.getPosttime());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             imageView.setImageDrawable(getIcon(m.packaename));
 
-        }
+        }}
+
+            }
             }
         return rowView;
 
