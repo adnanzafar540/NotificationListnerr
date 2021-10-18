@@ -2,6 +2,8 @@ package com.example.notificationlistnerr;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,13 +18,15 @@ import android.widget.ListView;
 import com.example.notificationlistnerr.Databases.Database;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     ListView list;
-    CustomListAdapter adapter;
+    RecyclerView rv_main;
+    ParentRecyclerViewAdapter adapter;
     ArrayList<Model> modelList;
     Button btn;
     Database db;
@@ -34,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         modelList = new ArrayList<Model>();
         db=new Database(this);
-        if(db.isDatabaseEmpty()) {
-            adapter = new CustomListAdapter(getApplicationContext(), sortData());
+        rv_main=findViewById(R.id.rv_main);
+        if(!db.isDatabaseEmpty()) {
+            adapter = new ParentRecyclerViewAdapter( sortData(),getApplicationContext());
+            rv_main.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+            rv_main.setAdapter(adapter);
         }
-        list=(ListView)findViewById(R.id.list);
-        list.setAdapter(adapter);
+
         Intent intent = new Intent(
                 "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
         startActivity(intent);
@@ -62,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 model.setNotificationChannelGroup(NotificationChannelGroup);
                 db.insertData(model);
 
-                    adapter = new CustomListAdapter(getApplicationContext(), sortData());
-                    list=(ListView)findViewById(R.id.list);
-                    list.setAdapter(adapter);
+                    adapter = new ParentRecyclerViewAdapter(sortData(),getApplicationContext());
+                 rv_main.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+              rv_main.setAdapter(adapter);
 
 
 
@@ -79,10 +85,15 @@ public class MainActivity extends AppCompatActivity {
                pakageName.add(item.packaename);
            }
            for(String value:pakageName){
-               main_innerlist.add( db.checkPakageName_GetData(value));
+              ;
+               main_innerlist.add(reverseList(db.checkPakageName_GetData(value)));
            }
 
            return main_innerlist;
 
+       }
+       public static List<Model> reverseList(List<Model> list){
+           Collections.reverse(list);
+           return list;
        }
 }

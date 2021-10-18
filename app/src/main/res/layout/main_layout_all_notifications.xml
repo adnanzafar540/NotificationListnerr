@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:divider="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="2dp">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/icon">
+    </androidx.appcompat.widget.AppCompatImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="10/2/199"
+        android:id="@+id/packagename"
+        android:textSize="17dp"
+        android:layout_marginLeft="10dp">
+    </TextView>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="10/2/199"
+        android:id="@+id/substringpackagename"
+        android:textSize="17dp"
+        android:layout_marginLeft="10dp">
+    </TextView>
+</LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_main">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
