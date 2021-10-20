@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp"
+    android:maxHeight="300dp"
     android:background="@drawable/layout_bg"
     xmlns:android="http://schemas.android.com/apk/res/android">
 

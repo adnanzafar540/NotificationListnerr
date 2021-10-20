@@ -21,11 +21,11 @@ import java.util.Set;
 public class CustomListAdapter extends BaseAdapter {
     Context context;
     List<List<Model>> modelList;
+    Set<String> setPakageName;
 
-    public CustomListAdapter(Context context,  List<List<Model>> modelList) {
+
+    public CustomListAdapter(Context context, List<List<Model>> modelList) {
         this.context = context;
-
-
         this.modelList = modelList;
     }
 
@@ -55,46 +55,50 @@ public class CustomListAdapter extends BaseAdapter {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView txt = (TextView) rowView.findViewById(R.id.Itemtext);
         TextView date = (TextView) rowView.findViewById(R.id.date_txt);
-
+        Model m = modelList.get(position);
         txtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openClickedPakage(m.getPackaename());
+                openClickedPakage(m.getPackaename());
+
             }
         });   txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // openClickedPakage(m.getPackaename());
+                openClickedPakage(m.getPackaename());
+
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // openClickedPakage(m.getPackaename());
+                openClickedPakage(m.getPackaename());
 
             }
         });
-            if(modelList!=null){
-                for(List<Model> model:modelList){
-                for(Model m:model){
-                  // Model m=model.get(position);
-            //Model m = modelList.get(position).get(1);
+
+        //TextView NotificationChannelGroup = (TextView) rowView.findViewById(R.id.notichannel);
+
+        //NotificationChannelGroup.setText(m.getNotificationChannelGroup());
         txtTitle.setText(m.getName());
         txt.setText(m.getText());
         date.setText(m.getPosttime());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             imageView.setImageDrawable(getIcon(m.packaename));
 
-        }}
+        }
 
-            }
-            }
-        return rowView;
+        /*if(m != null && m.getImage() !=null)
+            imageView.setImageBitmap(m.getImage());
+
+        **/return rowView;
 
     }
+
         public Drawable getIcon (String pakagename){
             Drawable appIcon = null;
             try {
+
                 appIcon = context.getPackageManager().getApplicationIcon(pakagename);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
