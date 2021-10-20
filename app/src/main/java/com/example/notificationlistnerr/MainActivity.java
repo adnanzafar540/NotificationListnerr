@@ -1,44 +1,37 @@
 package com.example.notificationlistnerr;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
+import android.service.notification.StatusBarNotification;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.notificationlistnerr.Databases.Database;
 
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 	ListView list;
-	CustomListAdapter adapter;
+	RecyclerView rv_main;
+	ParentRecyclerViewAdapter adapter;
 	ArrayList<Model> modelList;
 	Button btn;
 	Database db;
+	String iterateOverPakageName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,41 +39,17 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		modelList = new ArrayList<Model>();
 		db = new Database(this);
-		// btn=findViewById(R.id.btn_save);
+		rv_main = findViewById(R.id.rv_main);
+		if (!db.isDatabaseEmpty()) {
+			adapter = new ParentRecyclerViewAdapter(sortData(), getApplicationContext());
+			rv_main.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+			rv_main.setAdapter(adapter);
+		}
 
-		adapter = new CustomListAdapter(getApplicationContext(), sortData());
-		list = (ListView) findViewById(R.id.list);
-		list.setAdapter(adapter);
-        /*btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // addDatainDatabase();
-            }
-        });*/
 		Intent intent = new Intent(
 				"android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
 		startActivity(intent);
 		LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("Msg"));
-	}
-
-	private List<List<Model>> sortData() {
-		ArrayList<Model> testdata = db.readAllData();
-		List<List<Model>> innerLlist = new ArrayList<>();
-		Set<String> packagesSet = new HashSet();
-		for (Model item : testdata) {
-			packagesSet.add(item.packaename);
-		}
-
-		for (String value : packagesSet) {
-			List<Model> appsForPackageList = new ArrayList<>();
-			for (Model item : testdata) {
-				if (item.getPackaename().equals(value)) {
-					appsForPackageList.add(item);
-				}
-			}
-			innerLlist.add(appsForPackageList);
-		}
-		return innerLlist;
 	}
 
 	private BroadcastReceiver onNotice = new BroadcastReceiver() {
@@ -92,22 +61,58 @@ public class MainActivity extends AppCompatActivity {
 			String text = intent.getStringExtra("text");
 			String postime = intent.getStringExtra("PostTime");
 			String NotificationChannelGroup = intent.getStringExtra("NotificationChannelGroup");
-			//  Drawable drawable = intent.getExtra("icon");
-			//int id = intent.getIntExtra("icon",0);
-
-			Context remotePackageContext = null;
-
 			Model model = new Model();
 			model.setName(title);
 			model.setText(text);
 			model.setPosttime(postime);
 			model.setPackaename(pack);
 			model.setNotificationChannelGroup(NotificationChannelGroup);
-			db.insertData(model);
-
-
-			adapter = new CustomListAdapter(getApplicationContext(), sortData());
-			list.setAdapter(adapter);
+			if(shouldDisplayNotification(db.checkPakageName_GetData(pack),model)) {
+				db.insertData(model);
+			}
+			adapter = new ParentRecyclerViewAdapter(sortData(), getApplicationContext());
+			rv_main.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+			rv_main.setAdapter(adapter);
 		}
 	};
+
+	public List<List<Model>> sortData() {
+		List<Model> Test_data = db.readAllData();
+		Set<String> pakageName = new HashSet<>();
+		List<List<Model>> main_innerlist = new ArrayList<>();
+		List<Model> child_innerlist = new ArrayList<>();
+		for (Model item : Test_data) {
+			pakageName.add(item.packaename);
+		}
+		for (String value : pakageName) {
+			child_innerlist = reverseList(db.checkPakageName_GetData(value));
+
+
+			main_innerlist.add(child_innerlist);
+		}
+
+		return main_innerlist;
+
+	}
+
+	public static List<Model> reverseList(List<Model> list) {
+		Collections.reverse(list);
+		return list;
+	}
+
+
+	public  boolean shouldDisplayNotification(List<Model> list, Model newmodel) {
+		for (Model model : list) {
+			if (model.getName()==(newmodel.getName())) {
+				if (model.getPosttime() == newmodel.getPosttime()) {
+					if (model.getText() == newmodel.getText()) {
+						return false;
+					}
+				}
+			} else {
+				return true;
+			}
+		}
+		return true;
+	}
 }

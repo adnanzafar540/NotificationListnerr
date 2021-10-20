@@ -31,7 +31,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String Table = "CREATE TABLE " + TABLE_NAME +
                 " (id integer primary key," + COL_1 + " VARCHAR," +
-                COL_2 + " VARCHAR," + COL_3 + " VARCHAR," +COL_4 + " VARCHAR,"+
+                COL_2 + " VARCHAR," + COL_3 + " VARCHAR," + COL_4 + " VARCHAR," +
                 COL_5 + " VARCHAR);";
         db.execSQL(Table);
     }
@@ -41,21 +41,23 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
     public boolean insertData(Model model) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, model.getName());
-        contentValues.put(COL_2,  model.getText());
+        contentValues.put(COL_2, model.getText());
         contentValues.put(COL_3, model.getPosttime());
-        contentValues.put(COL_4,  model.getName());
-        contentValues.put(COL_5,  model.getPackaename());
+        contentValues.put(COL_4, model.getName());
+        contentValues.put(COL_5, model.getPackaename());
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
             return false;
-        }else{
+        } else {
             return true;
-}
+        }
     }
+
     public ArrayList<Model> readAllData() {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -75,6 +77,7 @@ public class Database extends SQLiteOpenHelper {
         }
         return list;
     }
+
     public List<Model> checkPakageName_GetData(String pkgName) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -82,7 +85,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery("SELECT * FROM particulars_table WHERE pakage_name = '" + pkgName + "'", null);
-             while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 Model model = new Model();
                 model.setName(cursor.getString(1));
                 model.setText(cursor.getString(2));
@@ -92,21 +95,23 @@ public class Database extends SQLiteOpenHelper {
                 modelList.add(model);
 
             }
-        }            return modelList;
+        }
+        return modelList;
 
     }
+
     public boolean isDatabaseEmpty() {
         boolean chk = false;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        if (mCursor != null){
-            if(mCursor.getCount() == 0){
+        if (mCursor != null) {
+            if (mCursor.getCount() == 0) {
 
                 chk = false;
             }
-        }else{
+        } else {
             chk = true;
         }
         return chk;
     }
-    }
+}
