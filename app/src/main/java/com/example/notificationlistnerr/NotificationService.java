@@ -75,6 +75,8 @@ public class NotificationService extends NotificationListenerService {
 
 
 
+
+
 		Intent msgrcv = new Intent("Msg");
 		msgrcv.putExtra("package", pack);
 		msgrcv.putExtra("ticker", ticker);

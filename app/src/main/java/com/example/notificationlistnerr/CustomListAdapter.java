@@ -94,19 +94,15 @@ public class CustomListAdapter extends BaseAdapter {
     }
     public Drawable getIcon (String pakagename){
         Drawable appIcon = null;
+
         try {
             appIcon = context.getPackageManager().getApplicationIcon(pakagename);
+            //String label=contex
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return appIcon;
     }
-    public void openClickedPakage(String pakagename){
-        PackageManager pm = context.getPackageManager();
-        Intent intent = pm.getLaunchIntentForPackage(pakagename);
-        if (intent != null) {
-            context.startActivity(intent);
-        }
-    }
+
 }
 

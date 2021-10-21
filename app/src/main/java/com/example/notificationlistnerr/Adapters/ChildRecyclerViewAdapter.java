@@ -1,6 +1,7 @@
-package com.example.notificationlistnerr;
+package com.example.notificationlistnerr.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.notificationlistnerr.Model;
+import com.example.notificationlistnerr.R;
+import com.example.notificationlistnerr.ShowAllNotifications;
 
 import java.util.List;
 
@@ -33,6 +38,18 @@ public class  ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycle
             Model m=arrayList.get(i);
             viewHolder.txt_name.setText(m.getName());
             viewHolder.date.setText(m.getText());
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=viewHolder.getAdapterPosition();
+                    Model mainModl=arrayList.get(i);
+                    String pakage_name= String.valueOf(mainModl.getPackaename());
+                    Intent i = new Intent(mContext, ShowAllNotifications.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("Pakage Name", pakage_name);
+                    mContext.startActivity(i);
+                }
+            });
         }
 
         @Override

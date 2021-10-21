@@ -23,6 +23,7 @@ public class ShowAllNotifications extends AppCompatActivity {
     TextView pakage_name;
     ImageView imageView;
     String pakagename;
+    String Appname;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout_all_notifications);
@@ -40,7 +41,8 @@ public class ShowAllNotifications extends AppCompatActivity {
             return;
         }
         pakagename = extras.getString("Pakage Name");
-        pakage_name.setText(pakagename);
+        Appname = extras.getString("App Name");
+        pakage_name.setText(Appname);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             imageView.setImageDrawable(getIcon_setname(pakagename));
         }
