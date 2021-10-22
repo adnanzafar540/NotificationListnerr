@@ -48,44 +48,16 @@ public class NotificationService extends NotificationListenerService {
 		super .onCreate() ;
 		context = getApplicationContext() ;
 	}
+	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	@SuppressLint("UseCompatLoadingForDrawables")
 	@Override
 	public void onNotificationPosted (StatusBarNotification sbn) {
-		String pack = sbn.getPackageName();
-		String ticker = "";
-		if (sbn.getNotification().tickerText != null) {
-			ticker = sbn.getNotification().tickerText.toString();
+		if ((sbn.getNotification().flags & Notification.FLAG_GROUP_SUMMARY) != 0) {
+			cancelNotification(this,sbn.getId());
+		} else {
+			addNotification(sbn);
 		}
-		Bundle extras = null;
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-			extras = sbn.getNotification().extras;
-		}
-		long NotificationPosttime = sbn.getPostTime();
-		String NotPosttime = getDate(NotificationPosttime, "dd/MM/yyyy hh:mm");
-		if (extras.get(Notification.EXTRA_TITLE) != null) {
-			title = (String) extras.get(Notification.EXTRA_TITLE);
-		}
-
-		try {
-			Object text = extras.get(Notification.EXTRA_TEXT);
-			text1 = text.toString();
-		} catch (Exception e) {
-
-		}
-
-
-
-
-
-		Intent msgrcv = new Intent("Msg");
-		msgrcv.putExtra("package", pack);
-		msgrcv.putExtra("ticker", ticker);
-		msgrcv.putExtra("title", title);
-		msgrcv.putExtra("text", text1);
-		msgrcv.putExtra("PostTime", NotPosttime);
-		LocalBroadcastManager.getInstance(context).sendBroadcast(msgrcv);
 	}
-
 	@Override
 	public void onNotificationRemoved (StatusBarNotification sbn) {
 		Log.i("Msg","Notification Removed");
@@ -101,6 +73,78 @@ public class NotificationService extends NotificationListenerService {
 		calendar.setTimeInMillis(milliSeconds);
 		return formatter.format(calendar.getTime());
 	}
+	public static void cancelNotification(Context context, int notifyId) {
+		NotificationManager notificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+
+		boolean cancelSummary = false;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N ) {
+			StatusBarNotification[] statusBarNotifications = notificationManager.getActiveNotifications();
+			String groupKey = null;
+
+			for (StatusBarNotification statusBarNotification : statusBarNotifications) {
+				if (notifyId == statusBarNotification.getId()) {
+					groupKey = statusBarNotification.getGroupKey();
+					break;
+				}
+			}
+
+			int counter = 0;
+			for (StatusBarNotification statusBarNotification : statusBarNotifications) {
+				if (statusBarNotification.getGroupKey().equals(groupKey)) {
+					counter++;
+				}
+			}
+
+			if (counter == 2) {
+				cancelSummary = true;
+			}
+		}
+
+		if (cancelSummary) {
+			//notificationManager.cancel(summeryId);
+			Log.d("msg", "cancelNotification: ");
+
+		} else {
+			notificationManager.cancel(notifyId);
+		}
+	}
+
+public void addNotification(StatusBarNotification sbn){
+
+	{
+		String pack = sbn.getPackageName();
+		String ticker = "";
+		if (sbn.getNotification().tickerText != null) {
+			ticker = sbn.getNotification().tickerText.toString();
+		}
+		Bundle extras = null;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+			extras = sbn.getNotification().extras;
+
+		}
+		long NotificationPosttime = sbn.getPostTime();
+		String NotPosttime = getDate(NotificationPosttime, "dd/MM/yyyy hh:mm");
+		if (extras.get(Notification.EXTRA_TITLE) != null) {
+			title = (String) extras.get(Notification.EXTRA_TITLE);
+		}
+
+		try {
+			Object text = extras.get(Notification.EXTRA_TEXT);
+			text1 = text.toString();
+		} catch (Exception e) {
+
+		}
 
 
+		Intent msgrcv = new Intent("Msg");
+		msgrcv.putExtra("package", pack);
+		msgrcv.putExtra("ticker", ticker);
+		msgrcv.putExtra("title", title);
+		msgrcv.putExtra("text", text1);
+		msgrcv.putExtra("PostTime", NotPosttime);
+		LocalBroadcastManager.getInstance(context).sendBroadcast(msgrcv);
+	}
+
+}
 }
