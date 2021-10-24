@@ -53,7 +53,7 @@ public class NotificationService extends NotificationListenerService {
 	@Override
 	public void onNotificationPosted (StatusBarNotification sbn) {
 		if ((sbn.getNotification().flags & Notification.FLAG_GROUP_SUMMARY) != 0) {
-			cancelNotification(this,sbn.getId());
+			return;
 		} else {
 			addNotification(sbn);
 		}
