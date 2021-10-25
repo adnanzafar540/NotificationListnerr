@@ -5,7 +5,10 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +27,16 @@ public class ShowAllNotifications extends AppCompatActivity {
     ImageView imageView;
     String pakagename;
     String Appname;
+    LinearLayout linearLayout_child;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout_all_notifications);
         db=new Database(this);
         rv_main=findViewById(R.id.rv_main);
+        linearLayout_child=findViewById(R.id.ll_child);
         pakage_name = findViewById(R.id.packagename);
         imageView = findViewById(R.id.icon);
+
 
     //    Bundle extras = getIntent().getExtras();
         Intent intent = this.getIntent();
@@ -49,7 +55,17 @@ public class ShowAllNotifications extends AppCompatActivity {
         adapter = new AdapterAllNotifications((MainActivity.reverseList(db.checkPakageName_GetData(pakagename))),getApplicationContext());
         rv_main.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rv_main.setAdapter(adapter);
+        linearLayout_child.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage(pakagename);
+                    startActivity(launchIntent);
+                }catch (Exception e){
 
+                }
+            }
+        });
 
 
     }
@@ -63,5 +79,9 @@ public class ShowAllNotifications extends AppCompatActivity {
             e.printStackTrace();
         }
 return appIcon;
+    }
+    public void openApp(String pakagename){
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.example.notificationlistnerr;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -40,6 +41,7 @@ public class AdapterAllNotifications  extends RecyclerView.Adapter<AdapterAllNot
             holder.txt_name.setText(m.getName());
             holder.txt_detail.setText(m.getText());
             holder.date_time.setText(m.getPosttime());
+
         }
 
     @Override
