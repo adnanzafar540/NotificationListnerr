@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class AdapterAllNotifications  extends RecyclerView.Adapter<AdapterAllNotifications.ViewHolder> {
     private List<Model> arrayList;
     Context mContext;
-    String pakagename;
+    int ScrollItemSize;
 
     public AdapterAllNotifications(List<Model> arrayList, Context mContext) {
         this.arrayList = arrayList;
@@ -33,21 +34,35 @@ public class AdapterAllNotifications  extends RecyclerView.Adapter<AdapterAllNot
         return new AdapterAllNotifications.ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull AdapterAllNotifications.ViewHolder holder, int position) {
 
 
-            Model m = arrayList.get(position);
+        Model m = arrayList.get(position);
             holder.txt_name.setText(m.getName());
             holder.txt_detail.setText(m.getText());
             holder.date_time.setText(m.getPosttime());
+           holder.itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Intent launchIntent = mContext.getPackageManager().getLaunchIntentForPackage(m.getPackaename());
+                   mContext.startActivity(launchIntent);
+               }
+           });
+           holder.itemView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+               @Override
+               public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                   ScrollItemSize=ScrollItemSize;
 
+               }
+           });
         }
 
     @Override
     public int getItemCount() {
 
-        return arrayList.size();    }
+        return ShowAllNotifications.size;    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_name;
         TextView txt_detail;

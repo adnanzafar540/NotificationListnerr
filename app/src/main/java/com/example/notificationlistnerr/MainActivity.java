@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
@@ -196,5 +197,18 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = Builder.create();
         alert.show();
 
+    }
+    public static String getApplicationName(String pakagename,Context context){
+        String applicationName;
+        final PackageManager pm = context.getApplicationContext().getPackageManager();
+        ApplicationInfo ai;
+        try {
+            ai = pm.getApplicationInfo( pakagename, 0);
+        } catch (final PackageManager.NameNotFoundException e) {
+            ai = null;
+        }
+        applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
+
+        return applicationName;
     }
 }

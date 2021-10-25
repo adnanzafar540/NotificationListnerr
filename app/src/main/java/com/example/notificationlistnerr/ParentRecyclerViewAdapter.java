@@ -50,7 +50,7 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
             String PackName=mainModl.getPackaename();
             //String substringPackName = PackName.substring(PackName.lastIndexOf(".")+1);
 
-            viewHolder.pakage_name.setText(getApplicationName(PackName));
+            viewHolder.pakage_name.setText(MainActivity.getApplicationName(PackName,context));
                 viewHolder.imageView.setImageDrawable(getIcon(mainModl.packaename));
                 viewHolder.date_time.setText(mainModl.getPosttime());
 
@@ -62,6 +62,7 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
 
 
         }
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,7 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
                 Intent i = new Intent(context, ShowAllNotifications.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("Pakage Name", pakage_name);
-                String ApplicationName=getApplicationName(pakage_name);
+                String ApplicationName=MainActivity.getApplicationName(pakage_name,context);
                 i.putExtra("App Name", ApplicationName);
                 context.startActivity(i);
             }
@@ -116,18 +117,7 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
         }
         return appIcon;
     }
-              public String getApplicationName(String pakagename){
-                  final PackageManager pm = context.getApplicationContext().getPackageManager();
-                  ApplicationInfo ai;
-                  try {
-                      ai = pm.getApplicationInfo( pakagename, 0);
-                  } catch (final PackageManager.NameNotFoundException e) {
-                      ai = null;
-                  }
-                  applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
 
-                        return applicationName;
-              }
 
 }
 

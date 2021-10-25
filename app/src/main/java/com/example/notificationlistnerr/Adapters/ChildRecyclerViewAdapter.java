@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notificationlistnerr.MainActivity;
 import com.example.notificationlistnerr.Model;
 import com.example.notificationlistnerr.R;
 import com.example.notificationlistnerr.ShowAllNotifications;
@@ -41,12 +42,13 @@ public class  ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycle
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position=viewHolder.getAdapterPosition();
                     Model mainModl=arrayList.get(i);
                     String pakage_name= String.valueOf(mainModl.getPackaename());
                     Intent i = new Intent(mContext, ShowAllNotifications.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("Pakage Name", pakage_name);
+                    String ApplicationName= MainActivity.getApplicationName(pakage_name,mContext);
+                    i.putExtra("App Name", ApplicationName);
                     mContext.startActivity(i);
                 }
             });
