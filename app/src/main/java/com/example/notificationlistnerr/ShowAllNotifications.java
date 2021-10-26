@@ -1,18 +1,4 @@
-+
-
-
-
-
-
-
-
-
-
-
-
-
-
-        package com.example.notificationlistnerr;
+package com.example.notificationlistnerr;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -95,24 +81,33 @@ public class ShowAllNotifications extends AppCompatActivity {
         rv_main.setAdapter(adapter);
         rv_main.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    totalItemCount = mLayoutManager.getItemCount();
+                    fetchData(MainActivity.reverseList(db.checkPakageName_GetData(pakagename)),totalItemCount);
+                }
+            }
+        });
+       /* rv_main.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) { //check for scroll down
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
-                    if (loading) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            loading = false;
+
                             Log.v("...", "Last Item Wow !");
                             fetchData(MainActivity.reverseList(db.checkPakageName_GetData(pakagename)),totalItemCount);
 
-                            loading = true;
                         }
-                    }
+
                 }
             }
-        });
+        });**/
 
         linearLayout_child.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +134,7 @@ public class ShowAllNotifications extends AppCompatActivity {
         }
 return appIcon;
     }
-       public List<Model> fetchData(List<Model> list,int totalItemCount){
+       public void fetchData(List<Model> list,int totalItemCount){
         int Iteratelimit;
            int limit;
            List<Model> newList=new ArrayList<>();
@@ -152,13 +147,14 @@ return appIcon;
                }
                for (int i = totalItemCount ; i <Iteratelimit; i++) {
                    Model model = list.get(i);
-                   newList.add(model);
-                   adapter.notifyDataSetChanged();
+                   listOf20elements.add(model);
                }
+               adapter.notifyDataSetChanged();
 
 
 
-       }return newList;
+
+           }
 }
 }
 
