@@ -20,11 +20,13 @@ import java.util.List;
 public class AdapterAllNotifications  extends RecyclerView.Adapter<AdapterAllNotifications.ViewHolder> {
     private List<Model> arrayList;
     Context mContext;
+    int size=20;
     int ScrollItemSize;
 
     public AdapterAllNotifications(List<Model> arrayList, Context mContext) {
         this.arrayList = arrayList;
         this.mContext = mContext;
+        this.size=size;
     }
 
     @NonNull
@@ -38,31 +40,34 @@ public class AdapterAllNotifications  extends RecyclerView.Adapter<AdapterAllNot
     @Override
     public void onBindViewHolder(@NonNull AdapterAllNotifications.ViewHolder holder, int position) {
 
-
-        Model m = arrayList.get(position);
+        try {
+            Model m = arrayList.get(position);
             holder.txt_name.setText(m.getName());
             holder.txt_detail.setText(m.getText());
             holder.date_time.setText(m.getPosttime());
-           holder.itemView.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   Intent launchIntent = mContext.getPackageManager().getLaunchIntentForPackage(m.getPackaename());
-                   mContext.startActivity(launchIntent);
-               }
-           });
-           holder.itemView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-               @Override
-               public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                   ScrollItemSize=ScrollItemSize;
 
-               }
-           });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent launchIntent = mContext.getPackageManager().getLaunchIntentForPackage(m.getPackaename());
+                        mContext.startActivity(launchIntent);
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+
+        } catch (Exception e) {
         }
-
+        ;
+    }
     @Override
     public int getItemCount() {
 
-        return ShowAllNotifications.size;    }
+        return arrayList.size();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_name;
         TextView txt_detail;

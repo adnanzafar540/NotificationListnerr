@@ -1,4 +1,18 @@
-package com.example.notificationlistnerr;
++
+
+
+
+
+
+
+
+
+
+
+
+
+
+        package com.example.notificationlistnerr;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,52 +35,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notificationlistnerr.Databases.Database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class ShowAllNotifications extends AppCompatActivity {
     AdapterAllNotifications adapter;
     Database db;
-    static int size=15;
+    static int size=10;
     RecyclerView rv_main;
     TextView pakage_name;
     ImageView imageView;
     String pakagename;
     String Appname;
+    List<Model> list;
+    List<Model> listOf20elements;
     LinearLayout linearLayout_child;
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout_all_notifications);
         db=new Database(this);
         rv_main=findViewById(R.id.rv_main1);
-        rv_main.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    size=size+20;
-                    Log.d(TAG, "onScrolled: ");
-                    // Scrolling up
-                } else {
-                    Log.d(TAG, "onScrolled: ");
-                    // Scrolling down
-                }
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    // Do something
-                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    // Do something
-                } else {
-                    // Do something
-                }
-            }
-        });
         linearLayout_child=findViewById(R.id.ll_child);
         pakage_name = findViewById(R.id.packagename);
         imageView = findViewById(R.id.icon);
@@ -86,9 +79,40 @@ public class ShowAllNotifications extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             imageView.setImageDrawable(getIcon_setname(pakagename));
         }
-        adapter = new AdapterAllNotifications((MainActivity.reverseList(db.checkPakageName_GetData(pakagename))),getApplicationContext());
-        rv_main.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        list=MainActivity.reverseList(db.checkPakageName_GetData(pakagename));
+        if(list.size()>=20){
+        listOf20elements=new ArrayList<>();
+        for(int i=0; i<20; i++){
+            Model m=list.get(i);
+            listOf20elements.add(m);
+        }}else {
+            listOf20elements=list;
+        }
+        adapter = new AdapterAllNotifications((listOf20elements),getApplicationContext());
+        LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+        rv_main.setLayoutManager(mLayoutManager);
         rv_main.setAdapter(adapter);
+        rv_main.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) { //check for scroll down
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            Log.v("...", "Last Item Wow !");
+                            fetchData(MainActivity.reverseList(db.checkPakageName_GetData(pakagename)),totalItemCount);
+
+                            loading = true;
+                        }
+                    }
+                }
+            }
+        });
 
         linearLayout_child.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,9 +139,26 @@ public class ShowAllNotifications extends AppCompatActivity {
         }
 return appIcon;
     }
-    public void openApp(String pakagename){
+       public List<Model> fetchData(List<Model> list,int totalItemCount){
+        int Iteratelimit;
+           int limit;
+           List<Model> newList=new ArrayList<>();
+           if(totalItemCount>=20 && list.size()>=20) {
+                limit = totalItemCount + 20;
+               if(limit>=list.size()){
+                   Iteratelimit=list.size();
+               }else {
+                   Iteratelimit=limit;
+               }
+               for (int i = totalItemCount ; i <Iteratelimit; i++) {
+                   Model model = list.get(i);
+                   newList.add(model);
+                   adapter.notifyDataSetChanged();
+               }
 
 
-    }
+
+       }return newList;
+}
 }
 
