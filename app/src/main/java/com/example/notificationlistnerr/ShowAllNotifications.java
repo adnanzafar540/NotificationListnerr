@@ -1,17 +1,22 @@
 package com.example.notificationlistnerr;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +33,12 @@ import static android.content.ContentValues.TAG;
 public class ShowAllNotifications extends AppCompatActivity {
     AdapterAllNotifications adapter;
     Database db;
-    static int size=10;
     RecyclerView rv_main;
     TextView pakage_name;
     ImageView imageView;
     String pakagename;
+    ProgressBar pg;
+    private static final int SHORT_DELAY = 1000; // 2 seconds
     String Appname;
     List<Model> list;
     List<Model> listOf20elements;
@@ -43,15 +49,17 @@ public class ShowAllNotifications extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout_all_notifications);
-        db=new Database(this);
-        rv_main=findViewById(R.id.rv_main1);
+        db = new Database(this);
+        rv_main = findViewById(R.id.rv_main1);
+        pg = findViewById(R.id.pgbar);
+        pg.setVisibility(View.GONE);
 
-        linearLayout_child=findViewById(R.id.ll_child);
+        linearLayout_child = findViewById(R.id.ll_child);
         pakage_name = findViewById(R.id.packagename);
         imageView = findViewById(R.id.icon);
 
 
-    //    Bundle extras = getIntent().getExtras();
+        //    Bundle extras = getIntent().getExtras();
         Intent intent = this.getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle extras = intent.getExtras();
@@ -65,16 +73,17 @@ public class ShowAllNotifications extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             imageView.setImageDrawable(getIcon_setname(pakagename));
         }
-        list=MainActivity.reverseList(db.checkPakageName_GetData(pakagename));
-        if(list.size()>=20){
-        listOf20elements=new ArrayList<>();
-        for(int i=0; i<20; i++){
-            Model m=list.get(i);
-            listOf20elements.add(m);
-        }}else {
-            listOf20elements=list;
+        list = MainActivity.reverseList(db.checkPakageName_GetData(pakagename));
+        if (list.size() >= 20) {
+            listOf20elements = new ArrayList<>();
+            for (int i = 0; i < 20; i++) {
+                Model m = list.get(i);
+                listOf20elements.add(m);
+            }
+        } else {
+            listOf20elements = list;
         }
-        adapter = new AdapterAllNotifications((listOf20elements),getApplicationContext());
+        adapter = new AdapterAllNotifications((listOf20elements), getApplicationContext());
         LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(mLayoutManager);
@@ -86,7 +95,7 @@ public class ShowAllNotifications extends AppCompatActivity {
 
                 if (!recyclerView.canScrollVertically(1)) {
                     totalItemCount = mLayoutManager.getItemCount();
-                    fetchData(MainActivity.reverseList(db.checkPakageName_GetData(pakagename)),totalItemCount);
+                    fetchData(MainActivity.reverseList(db.checkPakageName_GetData(pakagename)), totalItemCount);
                 }
             }
         });
@@ -115,7 +124,7 @@ public class ShowAllNotifications extends AppCompatActivity {
                 try {
                     Intent launchIntent = getPackageManager().getLaunchIntentForPackage(pakagename);
                     startActivity(launchIntent);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -123,7 +132,8 @@ public class ShowAllNotifications extends AppCompatActivity {
 
 
     }
-    public Drawable getIcon_setname (String pakagename){
+
+    public Drawable getIcon_setname(String pakagename) {
         Drawable appIcon = null;
         try {
             appIcon = this.getPackageManager().getApplicationIcon(pakagename);
@@ -132,29 +142,53 @@ public class ShowAllNotifications extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-return appIcon;
+        return appIcon;
     }
-       public void fetchData(List<Model> list,int totalItemCount){
-        int Iteratelimit;
-           int limit;
-           List<Model> newList=new ArrayList<>();
-           if(totalItemCount>=20 && list.size()>=20) {
-                limit = totalItemCount + 20;
-               if(limit>=list.size()){
-                   Iteratelimit=list.size();
-               }else {
-                   Iteratelimit=limit;
-               }
-               for (int i = totalItemCount ; i <Iteratelimit; i++) {
-                   Model model = list.get(i);
-                   listOf20elements.add(model);
-               }
-               adapter.notifyDataSetChanged();
+
+    public void fetchData(List<Model> list, int totalItemCount) {
+        pg.setVisibility(View.VISIBLE);
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void run() {
+                pg.setVisibility(View.GONE);
+                int Iteratelimit;
+                int limit;
+                List<Model> newList = new ArrayList<>();
+                if(totalItemCount==list.size()){
+                    final Toast toast= Toast.makeText(getApplication(),"No More Notifications",Toast.LENGTH_SHORT);
+                    toast.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast.cancel();
+                        }
+                    }, 500);
+                }
+                if (totalItemCount >= 20 && list.size() >= 20) {
+                    limit = totalItemCount + 20;
+                    if (limit >= list.size()) {
+                        Iteratelimit = list.size();
+                    } else {
+                        Iteratelimit = limit;
+                    }
+                    for (int i = totalItemCount; i < Iteratelimit; i++) {
+                        Model model = list.get(i);
+                        listOf20elements.add(model);
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+
+                }
+
+            }
+        }, 300);
+
+    }
 
 
 
-
-           }
 }
-}
-

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="7dp"
-    android:padding="5dp"
+    android:padding="15dp"
     android:background="@drawable/roundbutton">
 
 
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:hint="10/2/199"
             android:id="@+id/date_txt"
+            android:textStyle="bold"
             android:textSize="12dp"
             android:layout_marginLeft="50dp">
         </TextView>

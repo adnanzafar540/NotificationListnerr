@@ -29,17 +29,19 @@
             android:textSize="17sp"
             >
         </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="10/2/199"
+            android:id="@+id/date_txt"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginLeft="50dp">
+        </TextView>
 
 
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="10/2/199"
-        android:id="@+id/date_txt"
-        android:textSize="12sp"
-        android:layout_marginLeft="50dp">
-    </TextView>
+
 
     <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
