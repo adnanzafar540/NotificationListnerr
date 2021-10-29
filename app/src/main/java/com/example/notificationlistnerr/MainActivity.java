@@ -1,5 +1,6 @@
 package com.example.notificationlistnerr;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -22,6 +23,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
@@ -41,14 +43,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView rv_main;
     ParentRecyclerViewAdapter adapter;
     ArrayList<Model> modelList;
     Database db;
+    String pack;
     SwipeRefreshLayout swipeRefreshLayout;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         modelList = new ArrayList<Model>();
         db = new Database(this);
         rv_main = findViewById(R.id.rv_main);
+
         assessPermissions();
         if (!db.isDatabaseEmpty()) {
             adapter = new ParentRecyclerViewAdapter(sortData(), getApplicationContext());
@@ -91,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String pack = intent.getStringExtra("package");
+            pack = intent.getStringExtra("package");
             String title = intent.getStringExtra("title");
             String text = intent.getStringExtra("text");
             String postime = intent.getStringExtra("PostTime");
@@ -138,6 +145,21 @@ public class MainActivity extends AppCompatActivity {
         if (newmodel.getName() == null) {
             return false;
         }
+
+
+            if (pack.equals("com.whatsapp")) {
+                for (Model model : list) {
+                    if (model.getName().equals(newmodel.getName())) {
+                        if (model.getText().equals(newmodel.getText())) {
+                            return false;
+
+
+                        }
+                    }
+                }
+            }
+
+
         for (Model model : list) {
 
             if (model.getName().equals(newmodel.getName())) {

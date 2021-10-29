@@ -52,6 +52,10 @@ public class NotificationService extends NotificationListenerService {
 	@SuppressLint("UseCompatLoadingForDrawables")
 	@Override
 	public void onNotificationPosted (StatusBarNotification sbn) {
+		NotificationManager notificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+
+
 		if ((sbn.getNotification().flags & Notification.FLAG_GROUP_SUMMARY) == 0) {
 			addNotification(sbn); }
 	}
