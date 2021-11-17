@@ -81,8 +81,7 @@ public class Database extends SQLiteOpenHelper {
         List<Model> modelList = new ArrayList<>();
         Cursor cursor = null;
         if (db != null) {
-            cursor = db.rawQuery("SELECT * FROM particulars_table WHERE pakage_name = '" + pkgName + "'", null);
-        }
+            cursor = db.rawQuery("SELECT * FROM particulars_table WHERE pakage_name = '" + pkgName + "'", null);}
         while (cursor.moveToNext()) {
             Model model = new Model();
             model.setName(cursor.getString(1));

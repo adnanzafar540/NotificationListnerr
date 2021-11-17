@@ -3,15 +3,13 @@ package com.example.notificationlistnerr;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -20,20 +18,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PermissionInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.service.notification.StatusBarNotification;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 import com.example.notificationlistnerr.Databases.Database;
 
@@ -43,8 +34,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static android.content.ContentValues.TAG;
-
 public class MainActivity extends AppCompatActivity {
     RecyclerView rv_main;
     ParentRecyclerViewAdapter adapter;
@@ -52,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Database db;
     String pack;
     SwipeRefreshLayout swipeRefreshLayout;
+    Toolbar toolbar;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -63,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         modelList = new ArrayList<Model>();
         db = new Database(this);
         rv_main = findViewById(R.id.rv_main);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.icon_for_bar);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         assessPermissions();
         if (!db.isDatabaseEmpty()) {
@@ -83,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(

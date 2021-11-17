@@ -49,6 +49,9 @@ public class ShowAllNotifications extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout_all_notifications);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.icon_for_bar);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         db = new Database(this);
         rv_main = findViewById(R.id.rv_main1);
         pg = findViewById(R.id.pgbar);
