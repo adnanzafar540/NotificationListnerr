@@ -4,10 +4,10 @@
 
     <item
         android:gravity="left"
-        android:width="50dp"
-        android:height="50dp"
-        android:drawable="@drawable/logo"
-        android:right="20dp"/>
+        android:width="20dp"
+        android:height="20dp"
+        android:drawable="@drawable/about"
+        />
 
 
 </layer-list>

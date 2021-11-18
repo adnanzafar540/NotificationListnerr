@@ -20,7 +20,7 @@ import java.util.List;
 public class  ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecyclerViewAdapter.ViewHolder> {
         private List<Model> arrayList;
         Context mContext;
-        int limitOfItems=5;
+        int limitOfItems=0;
 
         public ChildRecyclerViewAdapter(List<Model> arrayList, Context mContext) {
             this.arrayList = arrayList;

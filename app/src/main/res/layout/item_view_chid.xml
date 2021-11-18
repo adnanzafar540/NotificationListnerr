@@ -10,7 +10,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textStyle="bold"
-                android:hint="watsapp"
+                android:textColor="#000000"
                 android:textSize="15sp"
                 android:id="@+id/Itemname">
             </TextView>
@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="13sp"
-                android:hint="dsafkaslkfhklahfkldhakhfk;lahksndafks;f"
+                android:textColor="#000000"
                 android:id="@+id/Itemtext">
             </TextView>
         </LinearLayout>

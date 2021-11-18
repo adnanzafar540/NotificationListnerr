@@ -4,23 +4,23 @@
     <item
         android:id="@+id/action_settings"
         android:title="Settings"
-        android:icon="@drawable/ic_baseline_10k_24"
+        android:icon="@drawable/ic_baseline_settingsblack_24"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_share"
         android:title="Share"
-        android:icon="@mipmap/share"
+        android:icon="@drawable/ic_baseline_shareblack_24"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_Rating"
         android:title="Rating"
-        android:icon="@mipmap/rating"
+        android:icon="@drawable/ic_baseline_star_rateblack_24"
         app:showAsAction="never" />
  <item
         android:id="@+id/action_About"
         android:title="About"
-     android:icon="@drawable/logo"
+     android:icon="@drawable/aboutarrange"
         app:showAsAction="never" />
 
 

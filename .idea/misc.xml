@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/About_background.xml" value="0.2046875" />
+        <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/aaaaaaaaaaaaaaaaaaaaa.xml" value="0.1421875" />
+        <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/aboutarrange.xml" value="0.2203125" />
+        <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/ic_baseline_10k_24.xml" value="0.1421875" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2046875" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2046875" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/layout_bg.xml" value="0.2203125" />
@@ -12,6 +15,7 @@
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/rectagle_shape_background.xml" value="0.2046875" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/roundbutton.xml" value="0.2203125" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/drawable/shadow_item.xml" value="0.2203125" />
+        <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/about.xml" value="0.18115942028985507" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/activity_main.xml" value="0.10507246376811594" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/activity_splash_screen.xml" value="0.18115942028985507" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/item_parent_rv.xml" value="0.10507246376811594" />
@@ -19,7 +23,9 @@
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/layout_show_all_notifications.xml" value="0.10507246376811594" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/list_item.xml" value="0.10507246376811594" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/main_layout_all_notifications.xml" value="0.10507246376811594" />
+        <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/layout/rating_notification.xml" value="0.18115942028985507" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/menu/menu_main.xml" value="0.14375" />
+        <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/mipmap-anydpi-v26/About_round.xml" value="0.2046875" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2203125" />
         <entry key="..\:/Users/baba/AndroidStudioProjects/NotificationListnerr/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2203125" />
       </map>

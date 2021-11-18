@@ -19,6 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000000"
         android:hint="10/2/199"
         android:id="@+id/packagename"
         android:textSize="17dp"
@@ -27,6 +28,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textColor="#000000"
         android:hint="10/2/199"
         android:id="@+id/substringpackagename"
         android:textSize="17dp"

@@ -5,8 +5,8 @@
         <item name="colorPrimary"> #000000</item>
         <item name="colorPrimaryVariant">#000000</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="actionBarSize">100dip</item>
-        <item name="android:actionBarStyle">@style/MyActionBarTabStyle</item>
+
+
 
 
 

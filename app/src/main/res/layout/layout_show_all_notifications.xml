@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:elevation="10dp"
+    card_view:cardElevation="1dp"
+    app:cardCornerRadius="4dp"
+    card_view:cardUseCompatPadding="true"
+    hardwareAccelerated ="false"
+
+    app:ignore="NamespaceTypo">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="7dp"
     android:padding="15dp"
-    android:background="@drawable/shadow_13931">
+>
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:hint="watsapp"
+            android:textColor="#000000"
             android:textSize="15dp"
             android:id="@+id/Itemname">
         </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="10/2/199"
-            android:id="@+id/date_txt"
-            android:textStyle="bold"
-            android:textSize="12dp"
-            android:layout_marginLeft="50dp">
-        </TextView>
 
-    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:id="@+id/date_txt"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="12dp">
+    </TextView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13dp"
-        android:hint="dsafkaslkfhklahfkldhakhfk;lahksndafks;f"
+        android:textColor="#000000"
         android:id="@+id/Itemtext">
     </TextView>
 
     </LinearLayout>
 
+</androidx.cardview.widget.CardView>

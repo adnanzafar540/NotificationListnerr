@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".about_page">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Free Version"
+            android:textAllCaps="true"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Digi NotiSave App Features:
+"
+            android:textColor="#000000"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="- Autosave the notifications to keep your Noti-bar clean and clear."
+            android:textColor="#000000">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="- Autosave new messages. "
+            android:textColor="#000000">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="- Allow you to see all notifications and deleted messages when you want."
+            android:textColor="#000000">
+
+        </TextView> <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="-Intuitive user interface - easy to read and manage."
+            android:textColor="#000000">
+
+        </TextView> <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="- Autosave unlimited notifications and messages."
+            android:textColor="#000000">
+
+        </TextView>
+
+
+
+
+
+
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:text="PRO VERsion"
+            android:textAllCaps="true"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Ad Free"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="- No Ads Version"
+            android:textColor="#000000"
+            >
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+
+                    android:layout_width="23dp"
+                    android:background="@drawable/arrow"
+                    android:layout_height="23dp"
+                    android:textColor="#000000"
+                    >
+
+                </ImageView>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="Version"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42dp"
+            android:text="Current Version Of CameraControlApp is 1.0.1"
+            android:textColor="#000000"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

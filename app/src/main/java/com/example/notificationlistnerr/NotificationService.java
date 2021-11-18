@@ -125,7 +125,7 @@ public void addNotification(StatusBarNotification sbn){
 
 		}
 		long NotificationPosttime = sbn.getPostTime();
-		String NotPosttime = getDate(NotificationPosttime, "dd/MM/yyyy hh:mm");
+		String NotPosttime = getDate(NotificationPosttime, "EEEE/MM hh:mm aa");
 		if (extras.get(Notification.EXTRA_TITLE) != null) {
 			title = (String) extras.get(Notification.EXTRA_TITLE);
 		}

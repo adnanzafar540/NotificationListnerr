@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblRateMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Rate Me"
+        android:padding="50dp"
+        android:textColor="#000000"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+
+        android:layout_gravity="center"
+        android:stepSize="1.0"
+        android:rating="2.0" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:background="#febd40"
+        android:text="Submit" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+
+        <TextView
+            android:id="@+id/txtRatingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="invisible"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </LinearLayout>
+
+</LinearLayout>

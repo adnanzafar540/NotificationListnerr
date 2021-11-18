@@ -27,6 +27,13 @@
         <activity android:name=".MainActivity"
             android:label="Digi NotiSave">
 
+        </activity
+            ><activity android:name=".RatingActivity"
+            android:label="Digi NotiSave">
+
+        </activity><activity android:name=".AboutActivity"
+            android:label="Digi NotiSave">
+
         </activity>
         <service
             android:name = ".NotificationService"

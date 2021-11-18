@@ -3,6 +3,7 @@ package com.example.notificationlistnerr;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         db = new Database(this);
         rv_main = findViewById(R.id.rv_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.icon_for_bar);
+        getSupportActionBar().setLogo(R.drawable.logo_adjustment);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         assessPermissions();
@@ -68,9 +69,13 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("Msg"));
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if(menu instanceof MenuBuilder){
+            ((MenuBuilder)menu).setOptionalIconsVisible(true);
+        }
         return true;
     }
 
@@ -82,6 +87,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(
                         "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
                 startActivity(intent);
+                return true;
+            case R.id.action_Rating:
+                Intent intent1 = new Intent(MainActivity.this,RatingActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.action_share:
+                Intent shareintent = new Intent();
+                shareintent.setAction(Intent.ACTION_SEND);
+                shareintent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?1d-h1");
+                shareintent.setType("Text/Plain");
+                startActivity(Intent.createChooser(shareintent, "share via"));
+                return true;
+            case R.id.action_About:
+                Intent intenAbout = new Intent(MainActivity.this,AboutActivity.class);
+                startActivity(intenAbout);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
